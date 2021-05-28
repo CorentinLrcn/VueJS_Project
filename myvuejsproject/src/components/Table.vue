@@ -6,7 +6,27 @@
     <thead>
       <tr>
         <th />
-        <th>Nom</th>
+        <th @click="sortName">
+          Nom
+          <img
+            v-if="sort === ''"
+            src="../assets/remove-outline.svg"
+            height="25"
+            width="25"
+          >
+          <img
+            v-if="sort === 'asc'"
+            src="../assets/chevron-up-outline.svg"
+            height="25"
+            width="25"
+          >
+          <img
+            v-if="sort === 'desc'"
+            src="../assets/chevron-down-outline.svg"
+            height="25"
+            width="25"
+          >
+        </th>
         <th>Email</th>
         <th>Tel</th>
         <th>Genre</th>
@@ -58,7 +78,8 @@ export default {
   },
   data() {
     return {
-      sort: '',
+      triAge: '',
+      triNom: '',
     };
   },
   computed: {
@@ -66,23 +87,38 @@ export default {
       return this.usersFiltered
         .filter(() => true)
         .sort((a, b) => {
-          if (this.sort === '') return a;
-          if (this.sort === 'asc') return a.age - b.age;
-          return b.age - a.age;
+          if (this.triAge === 'asc') return a.age - b.age;
+          if (this.triAge === 'desc') return b.age - a.age;
+          if (this.triNom === 'asc') return a.name.localeCompare(b.name);
+          if (this.triNom === 'desc') return b.name.localeCompare(a.name);
+          return a;
         });
     },
   },
   methods: {
     sortAge() {
-      if (this.sort === '') {
-        this.sort = 'asc';
+      this.triNom = '';
+      if (this.triAge === '') {
+        this.triAge = 'asc';
         return;
       }
-      if (this.sort === 'asc') {
-        this.sort = 'desc';
+      if (this.triAge === 'asc') {
+        this.triAge = 'desc';
         return;
       }
-      this.sort = '';
+      this.triAge = '';
+    },
+    sortName() {
+      this.triAge = '';
+      if (this.triNom === '') {
+        this.triNom = 'asc';
+        return;
+      }
+      if (this.triNom === 'asc') {
+        this.triNom = 'desc';
+        return;
+      }
+      this.triNom = '';
     },
   },
 };
