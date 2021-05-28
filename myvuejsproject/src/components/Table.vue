@@ -7,21 +7,21 @@
       <tr>
         <th />
         <th @click="sortName">
-          Nom
+          <span>Nom</span>
           <img
-            v-if="sort === ''"
+            v-if="triNom === ''"
             src="../assets/remove-outline.svg"
             height="25"
             width="25"
           >
           <img
-            v-if="sort === 'asc'"
+            v-if="triNom === 'asc'"
             src="../assets/chevron-up-outline.svg"
             height="25"
             width="25"
           >
           <img
-            v-if="sort === 'desc'"
+            v-if="triNom === 'desc'"
             src="../assets/chevron-down-outline.svg"
             height="25"
             width="25"
@@ -31,40 +31,56 @@
         <th>Tel</th>
         <th>Genre</th>
         <th @click="sortAge">
-          Age
+          <span>Age</span>
           <img
-            v-if="sort === ''"
+            v-if="triAge === ''"
             src="../assets/remove-outline.svg"
             height="25"
             width="25"
           >
           <img
-            v-if="sort === 'asc'"
+            v-if="triAge === 'asc'"
             src="../assets/chevron-up-outline.svg"
             height="25"
             width="25"
           >
           <img
-            v-if="sort === 'desc'"
+            v-if="triAge === 'desc'"
             src="../assets/chevron-down-outline.svg"
             height="25"
             width="25"
           >
         </th>
+        <th>Date de Naissance</th>
+        <th/>
       </tr>
     </thead>
     <tbody>
       <tr
         v-for="user in sortUsers"
-        :key="user.login.uuid"
-        class="table table-hover"
+        :key="user.id"
+        class="table"
       >
-        <td><img :src="user.avatar"></td>
+        <td>
+          <img
+            :src="user.avatar"
+            height="100"
+            width="75"
+          >
+        </td>
         <td v-html="user.name" />
         <td>{{ user.email }}</td>
         <td>{{ user.phone }}</td>
         <td>{{ user.gender }}</td>
         <td>{{ user.age }}</td>
+        <td>{{ user.birthDate }}</td>
+        <td>
+          <router-link
+            :to="{ name: 'Details', params: { id: user.id }}"
+          >
+            Detail
+          </router-link>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -123,3 +139,21 @@ export default {
   },
 };
 </script>
+
+<style>
+.table {
+  text-align: center;
+  margin: 1% 5%;
+  width: 90%;
+  border: 2px solid gray;
+  border-collapse: collapse;
+}
+
+.table tr {
+  border: 2px solid gray;
+}
+
+span + img {
+  margin-left: 10px;
+}
+</style>

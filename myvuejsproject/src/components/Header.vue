@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div id="tableHeader">
     <h1>jQuery example</h1>
-    <hr>
     <button
-      class="btn btn-primary spaced"
+      class="bouton"
       @click="$emit('fetchUsers')"
     >
       Fetch users
@@ -32,7 +31,6 @@
     >
     <span
       id="aff"
-      class="spaced"
     >
       {{ filteredValue.length }} / {{ userArray.length }} utilisateurs
     </span>
@@ -50,3 +48,40 @@ export default {
   },
 };
 </script>
+
+<style>
+  #tableHeader {
+    padding: 50px 0px;
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .bouton {
+    font-size: 17px;
+    color: white;
+    background-color: blue;
+    border: 1px solid blue;
+    border-radius: 5px;
+    margin-right: 3rem;
+    padding: 10px 15px;
+  }
+
+  #filter-users {
+    font-size: 17px;
+    border-radius: 5px;
+    margin-right: 3rem;
+    padding: 10px 15px;
+  }
+
+  .spaced {
+    font-size: 17px;
+    border-radius: 5px;
+    margin-right: 1.5rem;
+    padding: 10px 15px;
+  }
+
+  #aff {
+    font-size: 17px;
+  }
+
+</style>

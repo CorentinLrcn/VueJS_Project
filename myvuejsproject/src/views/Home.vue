@@ -74,6 +74,7 @@ export default {
           const reg = new RegExp(this.nameSearched, 'gi');
           return {
             age: user.age,
+            birthDate: user.birthDate,
             name: user.name.replace(
               reg,
               "<span style='background-color:yellow'>$&</span>",
@@ -82,23 +83,25 @@ export default {
             phone: user.phone,
             gender: user.gender,
             avatar: user.avatar,
-            login: user.login,
+            id: user.id,
           };
         });
     },
   },
   methods: {
     fetchUsers() {
-      return axios('https://randomuser.me/api/?results=20').then(
-        ({ data: { results } }) => {
-          this.users = results.map((user) => ({
-            age: user.dob.age,
-            name: `${user.name.first} ${user.name.last.toUpperCase()}`,
+      return axios.get('https://ynov-front.herokuapp.com/api/users').then(
+        ({ data: { data } }) => {
+          this.users = data.map((user) => ({
+            age: new Date(Date.now() - new Date(user.birthDate)).getFullYear() - 1970,
+            birthDate: user.birthDate,
+            name: `${user.firstName} ${user.lastName.toUpperCase()}`,
             email: user.email,
             phone: user.phone,
             gender: user.gender,
-            avatar: user.picture.thumbnail,
-            login: user.login.uuid,
+            avatar: user.avatarUrl,
+            // eslint-disable-next-line no-underscore-dangle
+            id: user._id,
           }));
         },
       );
