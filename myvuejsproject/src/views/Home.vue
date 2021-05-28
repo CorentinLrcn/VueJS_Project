@@ -11,7 +11,6 @@
     />
     <Table
       :usersFiltered="usersFiltered"
-      @sortAge="sortAge"
     />
   </div>
 </template>
@@ -31,7 +30,6 @@ export default {
     return {
       users: [],
       gender: 'all',
-      sort: '',
       nameSearched: '',
     };
   },
@@ -71,11 +69,6 @@ export default {
                 .replace(/[\u0300-\u036f]/g, ''),
             );
         })
-        .sort((a, b) => {
-          if (this.sort === '') return a;
-          if (this.sort === 'asc') return a.age - b.age;
-          return b.age - a.age;
-        })
         .map((user) => {
           if (this.nameSearched === '') return user;
           const reg = new RegExp(this.nameSearched, 'gi');
@@ -109,17 +102,6 @@ export default {
           }));
         },
       );
-    },
-    sortAge() {
-      if (this.sort === '') {
-        this.sort = 'asc';
-        return;
-      }
-      if (this.sort === 'asc') {
-        this.sort = 'desc';
-        return;
-      }
-      this.sort = '';
     },
   },
 };

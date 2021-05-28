@@ -10,7 +10,7 @@
         <th>Email</th>
         <th>Tel</th>
         <th>Genre</th>
-        <th @click="$emit('sortAge')">
+        <th @click="sortAge">
           Age
           <img
             v-if="sort === ''"
@@ -35,7 +35,7 @@
     </thead>
     <tbody>
       <tr
-        v-for="user in usersFiltered"
+        v-for="user in sortUsers"
         :key="user.login.uuid"
         class="table table-hover"
       >
@@ -55,6 +55,35 @@ export default {
   name: 'Table',
   props: {
     usersFiltered: Array,
+  },
+  data() {
+    return {
+      sort: '',
+    };
+  },
+  computed: {
+    sortUsers() {
+      return this.usersFiltered
+        .filter(() => true)
+        .sort((a, b) => {
+          if (this.sort === '') return a;
+          if (this.sort === 'asc') return a.age - b.age;
+          return b.age - a.age;
+        });
+    },
+  },
+  methods: {
+    sortAge() {
+      if (this.sort === '') {
+        this.sort = 'asc';
+        return;
+      }
+      if (this.sort === 'asc') {
+        this.sort = 'desc';
+        return;
+      }
+      this.sort = '';
+    },
   },
 };
 </script>
