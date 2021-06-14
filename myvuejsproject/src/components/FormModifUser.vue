@@ -45,10 +45,15 @@
                     placeholder="Votre fun fact *"
                 >
             </fieldset>
-            <input
+            <!--input
                 type="submit"
                 value="Modifier"
-            />
+            /-->
+            <button
+                type="submit"
+            >
+                Modifier
+            </button>
         </form>
     </div>
 </template>
@@ -77,6 +82,7 @@ export default {
   methods: {
     submitUser() {
       this.$emit('submitUser', this.userUpdated);
+      this.$router.push({ name: 'Home' });
     },
   },
 };
@@ -151,7 +157,7 @@ export default {
     }
 
     .form-style-5 input[type="submit"],
-    .form-style-5 input[type="button"] {
+    .form-style-5 button {
         position: relative;
         display: block;
         padding: 15px 30px;
@@ -169,7 +175,7 @@ export default {
     }
 
     .form-style-5 input[type="submit"]:hover,
-    .form-style-5 input[type="button"]:hover {
+    .form-style-5 button:hover {
         background: white;
         color: black;
     }

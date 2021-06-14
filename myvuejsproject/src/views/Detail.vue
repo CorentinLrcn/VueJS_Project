@@ -86,7 +86,9 @@ export default {
     async updateUser(userUpdated) {
       console.log(JSON.stringify(userUpdated));
       await axios.put(`https://ynov-front.herokuapp.com/api/users/${this.id}`, userUpdated)
-        .then(() => console.log('User updated'));
+        .then(() => {
+          console.log('User updated');
+        });
     },
   },
   created() {
