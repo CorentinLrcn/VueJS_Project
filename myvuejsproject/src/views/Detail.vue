@@ -7,7 +7,7 @@
       height="400"
       width="300"
     >
-    <dl>
+    <dl v-if="afficher === false">
         <dt>Sexe</dt>
         <dt>{{ user.gender }}</dt>
         <dd/>
@@ -26,17 +26,17 @@
         <dt>Fun Fact</dt>
         <dt>{{ user.details }}</dt>
     </dl>
+    <FormModifUser
+      v-if="afficher === true"
+      :userInitial="user"
+      @submitUser="updateUser"
+    />
     <br>
     <button
       class="modBtn"
       @click="setAfficher"
     >Modifier</button>
     <br>
-    <FormModifUser
-      v-if="afficher === true"
-      :userInitial="user"
-      @submitUser="updateUser"
-    />
   </div>
 </template>
 

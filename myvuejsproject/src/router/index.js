@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
 import DetailUser from '../views/Detail.vue';
+import Api from '../views/Api.vue';
 
 Vue.use(VueRouter);
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/detailsUser/:id',
     name: 'Details',
     component: DetailUser,
+  },
+  {
+    path: '/api',
+    name: 'Api',
+    component: Api,
   },
 ];
 

@@ -9,6 +9,19 @@
       @changeGender="(val) => (gender = val)"
       @changeSearch="(val) => (nameSearched = val)"
     />
+    <button
+      type="button"
+      class="btn"
+      @click="showModal"
+    >
+      Create user
+    </button>
+
+    <ModalCreateUser
+      v-show="isModalVisible"
+      @close="closeModal"
+      @submitNewUser="createUser"
+    />
     <Table
       :usersFiltered="usersFiltered"
     />
@@ -19,18 +32,21 @@
 import axios from 'axios';
 import Header from '../components/Header.vue';
 import Table from '../components/Table.vue';
+import ModalCreateUser from '../components/ModalCreateUser.vue';
 
 export default {
   name: 'App',
   components: {
     Header,
     Table,
+    ModalCreateUser,
   },
   data() {
     return {
       users: [],
       gender: 'all',
       nameSearched: '',
+      isModalVisible: false,
     };
   },
   computed: {
@@ -88,6 +104,9 @@ export default {
         });
     },
   },
+  created() {
+    this.fetchUsers();
+  },
   methods: {
     fetchUsers() {
       return axios.get('https://ynov-front.herokuapp.com/api/users').then(
@@ -106,9 +125,36 @@ export default {
         },
       );
     },
-  },
-  created() {
-    this.fetchUsers();
+    async createUser(newUser) {
+      // eslint-disable-next-line no-console
+      console.log(JSON.stringify(newUser));
+      await axios.post('https://ynov-front.herokuapp.com/api/users', newUser)
+        .then(() => {
+          // eslint-disable-next-line no-console
+          console.log('user created');
+          this.closeModal();
+          // eslint-disable-next-line no-restricted-globals
+          location.reload();
+        });
+    },
+    showModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
 };
 </script>
+
+<style>
+ .btn {
+   font-size: 17px;
+    color: white;
+    background-color: blue;
+    border: 1px solid blue;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin-bottom: 5%;
+ }
+</style>
